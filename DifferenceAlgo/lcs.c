@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h> 
 #include <string.h>
+#include <stdint.h>
+#define MAX 100
 
 int maximum(int x, int y); 
 
@@ -40,18 +42,45 @@ void lcs(char *X, char *Y) {
   
    // Printing the lcs 
    printf("%s", lcs);
-} 
+}
 
-   
 int maximum(int x, int y) {
 	return (x > y) ? x : y;
 } 
    
 int main() 
 { 
-  char X[] = "Hello World. Let's make it a better placew\nasd"; 
-  char Y[] = "hello world. Why's nity?ass";  
-  lcs(X, Y); 
+  FILE *ptr1, *ptr2;
+	char file[100];
+	char X, Y;
+
+	printf("Enter the filename to open for reading:"); 
+    scanf("%s", file); 
+
+	ptr1 = fopen(file, "r");
+	if (ptr1 == NULL) {
+		printf("Cannot open file \n");
+		exit(0);
+	} 
+
+	printf("Enter the second filename to open for reading:"); 
+    scanf("%s", file); 
+
+	ptr2 = fopen(file, "r");
+	if (ptr2 == NULL) {
+		printf("Cannot open file \n");
+		exit(0);
+	} 
+
+	char str1[MAX];
+	char str2[MAX];
+
+	while ((fgets (str1, MAX, ptr1)!= NULL) && (fgets (str2, MAX, ptr2)!=NULL)) {
+		lcs(str1, str2);
+	}
+
+  fclose(ptr1);
+  fclose(ptr2);
   
   return 0; 
 } 
