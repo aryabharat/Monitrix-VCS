@@ -18,7 +18,7 @@ void create_new_file(char* name[])
       {
         strcat(name[2], "/temp");     // Created a temp folder inside of the  main Repoistry folder.
         mkdir(name[2], 0700);
-        printf("\nDirectory created");
+        printf("\nDirectory created\n");
       }
 }
 
@@ -36,9 +36,13 @@ int main(int argc,char* argv[])
       }
       else
       {
-        printf("Error %s",argv[1]);
+        printf("Error %s\n",argv[1]);
       }
     }
+    else
+     {
+         printf("Error %s\n",argv[1]);
+     }
 
    /*
    code to make a new directory in the name direcorty.
