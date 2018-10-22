@@ -12,7 +12,7 @@ void create_new_file(char* name[])
 {
   // Creating a directory
     if (mkdir(name[2], 0777) == -1)
-        printf("\nError");
+        printf("\nError\n");
 
     else
       {
@@ -25,7 +25,7 @@ void create_new_file(char* name[])
 int main(int argc,char* argv[])
 {
     int counter;
-  //  printf("Program Name Is: %s",argv[0]);
+  //  printf("Program Name Is: %s\n",argv[0]);
 
    // argc is 3 for new directory..
     if(argc==3)
