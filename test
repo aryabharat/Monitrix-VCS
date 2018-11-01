@@ -1,7 +1,11 @@
-hello
+#include <bits/stdc++.h>
+#include <stdio.h>
 
-hi
+using namespace std;
 
-test
-
-is
+int gcd(int a, int b) 
+{ 
+    if (b == 0) return a; 
+  
+    else return gcd(b, a % b); 
+} 
