@@ -51,7 +51,22 @@ void commit()
     // for readdir()
       printf("ALL the files in the repo are:");
     while ((de = readdir(dr)) != NULL)
-            printf("%s\n", de->d_name);
+            {
+             
+              if(!strcmp(de->d_name,"temp") || !strcmp(de->d_name,".") || !strcmp(de->d_name,"..") )
+                   continue;
+               //printf("%s\n", de->d_name);
+
+              char  source_file[50];
+              strcpy (source_file, de->d_name);
+              char target_file[50] = " temp";
+              char sy[] = "cp -r ";
+             strcat(sy,source_file);
+             //strcat(sy, " ");
+             strcat(sy,target_file);
+               printf("%s\n", sy);
+                system(sy);
+            }
 
     closedir(dr);
   /*  if (getcwd(cwd, sizeof(cwd)) != NULL)
