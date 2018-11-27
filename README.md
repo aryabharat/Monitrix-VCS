@@ -32,11 +32,10 @@ Creating a new project
 init Monitrix filename;
 ```
 
-
 ## Built With
 
-[C](https://en.cppreference.com/w/c/language) - The language used
-[Diff algorithm](https://en.wikipedia.org/wiki/Diff) - Algorithm for finding difference between 2 files
+* [C](https://en.cppreference.com/w/c/language) - The language used
+* [Diff algorithm](https://en.wikipedia.org/wiki/Diff) - Algorithm for finding difference between 2 files
 
 ## Author
 
