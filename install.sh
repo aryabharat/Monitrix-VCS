@@ -1,2 +1,2 @@
-sudo cp "/home/bharat/Desktop/Monitrix-VCS-master/monitrix" "/bin"
+sudo cp "./Monitrix-VCS-master/monitrix" "/bin"
 
