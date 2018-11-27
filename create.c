@@ -1,13 +1,12 @@
-
-// C program to illustrate
-// command line arguments
 #include<stdio.h>
 #include<stdlib.h>
-#include <sys/stat.h>
+#include <sys/stat.h>     // Header used for log also.
 #include <string.h>
 #include <unistd.h>      // Header file for Commit command
 #include <limits.h>     // Header File for commit command "PATH_MAX"
 #include <dirent.h>
+#include <sys/types.h>   //Header for log file
+#include <time.h>       // Header for log ctime
 
 // Create a new file if already exist give error message.
 
@@ -25,16 +24,37 @@ void create_new_file(char* name[])
       }
 }
 
-void commit()
+void logs()
 {
-  /*
-  Code to print current directory
-  */
     char cwd[PATH_MAX];
     getcwd(cwd, sizeof(cwd));
-    printf("Current working dir: %s\n", cwd);
 
-    /****************  PRINT ALL THE FILES IN DIRECTORY  *****************/
+    struct dirent *de;  // Pointer for directory entry
+
+    // opendir() returns a pointer of DIR type.
+    DIR *dr = opendir(cwd);
+
+    if (dr == NULL)  // opendir returns NULL if couldn't open directory
+    {
+        printf("Could not open current directory" );
+        return;
+    }
+    // Refer http://pubs.opengroup.org/onlinepubs/7990989775/xsh/readdir.html
+    // for readdir()
+    while ((de = readdir(dr)) != NULL)
+      {
+	       printf("%s  ",de->d_name);
+         struct stat attr;
+         stat(de->d_name, &attr);
+	       printf("Last modified time: %s", ctime(&attr.st_mtime));
+      }
+}
+
+void commit()
+{
+    mkdir("temp/version",0777);
+    char cwd[PATH_MAX];
+    getcwd(cwd, sizeof(cwd));
 
     struct dirent *de;  // Pointer for directory entry
 
@@ -49,23 +69,23 @@ void commit()
 
     // Refer http://pubs.opengroup.org/onlinepubs/7990989775/xsh/readdir.html
     // for readdir()
-      printf("ALL the files in the repo are:");
+    printf("ALL the files in the repo are:");
     while ((de = readdir(dr)) != NULL)
             {
-             
+
               if(!strcmp(de->d_name,"temp") || !strcmp(de->d_name,".") || !strcmp(de->d_name,"..") )
                    continue;
                //printf("%s\n", de->d_name);
 
               char  source_file[50];
               strcpy (source_file, de->d_name);
-              char target_file[50] = " temp";
+              char target_file[50] = " temp/version";
               char sy[] = "cp -r ";
-             strcat(sy,source_file);
-             //strcat(sy, " ");
-             strcat(sy,target_file);
-               printf("%s\n", sy);
-                system(sy);
+              strcat(sy,source_file);
+              //strcat(sy, " ");
+              strcat(sy,target_file);
+              printf("%s\n", sy);
+              system(sy);
             }
 
     closedir(dr);
@@ -104,6 +124,10 @@ int main(int argc,char* argv[])
          {
              commit();
          }
+       else if(!strcmp(argv[1], "log"))
+	{
+            logs();
+	}
          else
          {
            printf("Error %s\n",argv[1]);
