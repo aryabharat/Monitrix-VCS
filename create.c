@@ -20,6 +20,12 @@ void create_new_file(char* name[])
       {
         strcat(name[2], "/temp");     // Created a temp folder inside of the  main Repoistry folder.
         mkdir(name[2], 0700);
+        strcat(name[2], "/file1.txt");
+        FILE * fPtr;
+        fPtr = fopen(name[2], "w");
+        fputs("0", fPtr);
+        fclose(fPtr);
+          printf("\nDirectory created\n");
         printf("\nDirectory created\n");
       }
 }
