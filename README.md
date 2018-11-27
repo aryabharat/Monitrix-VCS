@@ -1,4 +1,4 @@
-#MONITRIX-VCS
+# MONITRIX-VCS
 Monitrix is a local Version Control System that helps one to manage a project on his/her local machine. Monitrix helps you to work on a private repository absolutely free.
 
 ## Getting Started
@@ -11,7 +11,6 @@ What things you need to install the software and how to install them
 
 ```
 Ubuntu operating system
-```
 ```
 ### Installing
 
@@ -32,6 +31,7 @@ Creating a new project
 ```
 init Monitrix filename;
 ```
+
 
 ## Built With
 
