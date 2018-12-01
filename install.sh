@@ -1,2 +1,7 @@
-sudo cp "./Monitrix-VCS-master/monitrix" "/bin"
-
+output="$( bash <<EOF 
+pwd
+EOF
+)"
+output+="/monitrix"
+#echo $output
+sudo cp -r "$output" "/bin"
