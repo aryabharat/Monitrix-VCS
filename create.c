@@ -19,7 +19,7 @@ void create_new_file(char* name[])
       {
         strcat(name[2], "/temp");     // Created a temp folder inside of the  main Repoistry folder.
         mkdir(name[2], 0700);
-        strcat(name[2], "/count.txt");
+        strcat(name[2], "/.count.txt");
         FILE * fPtr;
         fPtr = fopen(name[2], "w");
         fputs("0", fPtr);
@@ -77,12 +77,12 @@ void commit()
     //code to count the verison number
     FILE *fr;
     int filecount;
-    fr = fopen("temp/count.txt", "r");
+    fr = fopen("temp/.count.txt", "r");
     fscanf(fr,"%d",&filecount); /*read from file*/
     //printf("%d",n); /*display on screen*/
     fclose(fr);
     filecount++;
-    fr = fopen("temp/count.txt", "w");
+    fr = fopen("temp/.count.txt", "w");
     fprintf(fr, "%d",filecount); /*  write to file*/
     fclose(fr);
     char tempstr[10];
