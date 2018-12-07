@@ -9,7 +9,6 @@
 #include <time.h>       // Header for log ctime
 
 // Create a new file if already exist give error message.
-
 void create_new_file(char* name[])
 {
   // Creating a directory
@@ -20,12 +19,11 @@ void create_new_file(char* name[])
       {
         strcat(name[2], "/temp");     // Created a temp folder inside of the  main Repoistry folder.
         mkdir(name[2], 0700);
-        strcat(name[2], "/file1.txt");
+        strcat(name[2], "/count.txt");
         FILE * fPtr;
         fPtr = fopen(name[2], "w");
         fputs("0", fPtr);
         fclose(fPtr);
-          printf("\nDirectory created\n");
         printf("\nDirectory created\n");
       }
 }
@@ -34,31 +32,30 @@ void logs()
 {
     char cwd[PATH_MAX];
     getcwd(cwd, sizeof(cwd));
-
     struct dirent *de;  // Pointer for directory entry
-
     // opendir() returns a pointer of DIR type.
     DIR *dr = opendir(cwd);
 
     if (dr == NULL)  // opendir returns NULL if couldn't open directory
     {
-        printf("Could not open current directory" );
+        printf("\nCould not open current directory\n" );
         return;
     }
     // Refer http://pubs.opengroup.org/onlinepubs/7990989775/xsh/readdir.html
     // for readdir()
     while ((de = readdir(dr)) != NULL)
       {
+        if(!strcmp(de->d_name,"temp") || !strcmp(de->d_name,".") || !strcmp(de->d_name,"..") )
+             continue;
 	       printf("%s  ",de->d_name);
          struct stat attr;
          stat(de->d_name, &attr);
-	       printf("Last modified time: %s", ctime(&attr.st_mtime));
+	       printf("\nLast modified time: %s\n", ctime(&attr.st_mtime));
       }
 }
 
 void commit()
 {
-    mkdir("temp/version",0777);
     char cwd[PATH_MAX];
     getcwd(cwd, sizeof(cwd));
 
@@ -69,31 +66,48 @@ void commit()
 
     if (dr == NULL)  // opendir returns NULL if couldn't open directory
     {
-        printf("Could not open current directory" );
+        printf("\nCould not open current directory\n" );
         return;
     }
 
     // Refer http://pubs.opengroup.org/onlinepubs/7990989775/xsh/readdir.html
     // for readdir()
-    printf("ALL the files in the repo are:");
+    //printf("ALL the files in the repo are:");
+
+    //code to count the verison number
+    FILE *fr;
+    int filecount;
+    fr = fopen("temp/count.txt", "r");
+    fscanf(fr,"%d",&filecount); /*read from file*/
+    //printf("%d",n); /*display on screen*/
+    fclose(fr);
+    filecount++;
+    fr = fopen("temp/count.txt", "w");
+    fprintf(fr, "%d",filecount); /*  write to file*/
+    fclose(fr);
+    char tempstr[10];
+    char  source_file[50];
+    sprintf(tempstr, "%d", filecount);  // convert number into string
+    char target_file[50] = "temp/version";
+    strcat(target_file,tempstr);
+    mkdir(target_file,0777);
     while ((de = readdir(dr)) != NULL)
             {
-
               if(!strcmp(de->d_name,"temp") || !strcmp(de->d_name,".") || !strcmp(de->d_name,"..") )
                    continue;
                //printf("%s\n", de->d_name);
-
-              char  source_file[50];
+              //char  source_file[50];
               strcpy (source_file, de->d_name);
-              char target_file[50] = " temp/version";
+              //char target_file[50] = " temp/version";
               char sy[] = "cp -r ";
               strcat(sy,source_file);
               //strcat(sy, " ");
+              strcat(sy," ");
               strcat(sy,target_file);
-              printf("%s\n", sy);
+            //  printf("%s\n", sy);
               system(sy);
             }
-
+    printf("COMMIT SAVED\n");
     closedir(dr);
   /*  if (getcwd(cwd, sizeof(cwd)) != NULL)
       {
@@ -108,9 +122,6 @@ void commit()
 
 int main(int argc,char* argv[])
 {
-    int counter;
-  //  printf("Program Name Is: %s\n",argv[0]);
-
    // argc is 3 for new directory..
     if(argc==3)
     {
@@ -121,7 +132,7 @@ int main(int argc,char* argv[])
 
         else
         {
-          printf("Error %s\n",argv[1]);
+          printf("\nError %s\n",argv[1]);
         }
     }
     else if(argc == 2)
@@ -136,12 +147,12 @@ int main(int argc,char* argv[])
 	}
          else
          {
-           printf("Error %s\n",argv[1]);
+           printf("\nError %s\n",argv[1]);
          }
      }
      else
       {
-          printf("Error %s\n",argv[1]);
+          printf("\nError %s\n",argv[1]);
       }
 
    /*
