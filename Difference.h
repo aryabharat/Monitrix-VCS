@@ -82,6 +82,11 @@ void lcs(char *X, char *Y, int ctr) {
 	 	}
 	}
 
+	if(strlen(lcs) == 0){
+		printf("At line %d :", ctr);
+		printf("\033[1;32m%s\033[0m", X);
+	}
+
 	//printf("%s\n", lcs);
 
 	int p = 0;
@@ -102,10 +107,11 @@ void lcs(char *X, char *Y, int ctr) {
    //Printing the lcs
 
 	if (q == 0) {
-	 			printf("\nAt line %d :", ctr);
-	 			printf("%s\n", lcs);
-	 			q++;
-	 		}
+		printf("\nAt line %d :", ctr);
+		printf("%s\n", lcs);
+		q++;
+	}
+
 }
 
 int maximum(int x, int y) {
@@ -216,9 +222,9 @@ void openfiles(char *file1, char *file2) {
             {   
                 cmt++;
             }   
-        }
+          }
 	}
-	else printf("%s\n", "True");
+	else printf("\n");
 	printf("\n");
 	fclose(ptr1);
 	fclose(ptr2);
