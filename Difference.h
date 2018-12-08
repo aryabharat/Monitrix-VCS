@@ -117,9 +117,15 @@ void openfiles(char *file1, char *file2) {
   FILE *ptr1, *ptr2;
 
 	ptr1 = fopen(file1, "r");
+	ptr2 = fopen(file2, "r");
+
+	if (ptr1 == NULL && ptr2 == NULL) {
+		printf("File does not exists. \n");
+		exit(0);
+	}
 
 	if (ptr1 == NULL) {
-		printf("Cannot open file \n");
+		printf("New file was created. \n");
 		exit(0);
 	} 
 
@@ -128,10 +134,9 @@ void openfiles(char *file1, char *file2) {
 	printf("Total size of %s = %d bytes\n", file1, len1);
 	rewind(ptr1);
 
-	ptr2 = fopen(file2, "r");
 
 	if (ptr2 == NULL) {
-		printf("Cannot open file \n");
+		printf("File was deleted. \n");
 		exit(0);
 	} 
 
@@ -140,6 +145,7 @@ void openfiles(char *file1, char *file2) {
 	printf("Total size of %s = %d bytes\n", file2, len2);
 	rewind(ptr2);
 
+	printf("\n");
 	char str1[MAX];
 	char str2[MAX];
 
@@ -173,6 +179,8 @@ void openfiles(char *file1, char *file2) {
     int cmt = 0;
     int cnt = 0;
 
+    int c_ounter;
+
 	if (count1 > count2) {
 		// printf("%d\n", count1);
 		// printf("%d\n", count2);
@@ -180,9 +188,11 @@ void openfiles(char *file1, char *file2) {
         while (fgets(line, sizeof line, ptr1) != NULL) /* read a line */{
             if (cmt >= count2)
             {   
+            	cmt++;
+            	printf("\nAt line %d:", cmt);
                 //use line or in a function return it
                 //            //in case of a return first close the file with "fclose(file);"
-            printf("\n %s ", line);
+            printf("\033[1;32m%s\033[0m",line);
             }   
             else
             {   
@@ -196,10 +206,11 @@ void openfiles(char *file1, char *file2) {
         while (fgets(line, sizeof line, ptr2) != NULL) /* read a line */{
             if (cmt >= count1)
             {   
-            	// printf("%d\n", cmt);
+            	cmt++;
+            	printf("\nAt line %d:", cmt);
                 //use line or in a function return it
                 //            //in case of a return first close the file with "fclose(file);"
-            printf("\n %s ", line);
+            printf("\033[1;31m%s\033[0m",line);
             }   
             else
             {   
@@ -208,8 +219,8 @@ void openfiles(char *file1, char *file2) {
         }
 	}
 	else printf("%s\n", "True");
-	
+	printf("\n");
 	fclose(ptr1);
 	fclose(ptr2);
-	
+   
 } 
