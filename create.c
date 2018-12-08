@@ -7,6 +7,7 @@
 #include <dirent.h>
 #include <sys/types.h>   //Header for log file
 #include <time.h>       // Header for log ctime
+#include "Difference.h"
 
 // Create a new file if already exist give error message.
 void create_new_file(char* name[])
@@ -26,6 +27,23 @@ void create_new_file(char* name[])
         fclose(fPtr);
         printf("\nDirectory created\n");
       }
+}
+
+void diff(char *name[])
+{
+  char previous_file[20] = "temp/version";
+  char tempstr[20];
+  FILE *fr;
+  int filecount;
+  fr = fopen("temp/.count.txt", "r");
+  fscanf(fr,"%d",&filecount); /*read from file*/
+  fclose(fr);
+  sprintf(tempstr, "%d", filecount);
+  strcat(previous_file,tempstr);
+  strcat(previous_file,"/");
+  strcat(previous_file,name[2]);
+  //printf("%s\n",previous_file);
+  openfiles( previous_file,name[2]);
 }
 
 void logs()
@@ -123,13 +141,17 @@ void commit()
 int main(int argc,char* argv[])
 {
    // argc is 3 for new directory..
+
     if(argc==3)
     {
         if(!strcmp(argv[1], ".init"))
         {
           create_new_file(argv);
         }
-
+       else if(!strcmp(argv[1], "diff"))
+        {
+          diff(argv);
+        }
         else
         {
           printf("\nError %s\n",argv[1]);
