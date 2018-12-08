@@ -51,14 +51,16 @@ void lcs(char *X, char *Y, int ctr) {
 		else if (L[i-1][j] > L[i][j-1]) {
 			//printf("At line %d :", ctr);
 			//printf("\033[1;32m%c\033[0m", X[i-1]);
-			addition[i-1] = X[i-1];  // Including the given character in addition
+			addition[i-1] = X[i-1];
+			//lcs[ix-1] = '';  // Including the given character in addition
 			i--;
 			//printf("\n"); 
 		}
 		else {
 			//printf("At line %d :", ctr);
 			//printf("\033[1;31m%c\033[0m", Y[j-1]);
-			deletion[j-1] = Y[j-1];  // Including the given character in deletion
+			deletion[j-1] = Y[j-1];
+			//lcs[ix-1] = ' ';  // Including the given character in deletion
 			j--;
 			// printf("\n"); 
 		}
@@ -110,27 +112,33 @@ int maximum(int x, int y) {
 	return (x > y) ? x : y;
 } 
    
-void openfiles(char file1, char file2) { 
+void openfiles(char *file1, char *file2) { 
+  
   FILE *ptr1, *ptr2;
-	char file[100];
-
-	printf("Enter the filename to open for reading:"); 
-    	scanf("%s", file1); 
 
 	ptr1 = fopen(file1, "r");
+
 	if (ptr1 == NULL) {
 		printf("Cannot open file \n");
 		exit(0);
 	} 
 
-	printf("Enter the second filename to open for reading:"); 
-    	scanf("%s", file2); 
+	fseek(ptr1, 0, SEEK_END);
+	int len1 = ftell(ptr1);
+	printf("Total size of %s = %d bytes\n", file1, len1);
+	rewind(ptr1);
 
 	ptr2 = fopen(file2, "r");
+
 	if (ptr2 == NULL) {
 		printf("Cannot open file \n");
 		exit(0);
 	} 
+
+	fseek(ptr2, 0, SEEK_END);
+	int len2 = ftell(ptr2);
+	printf("Total size of %s = %d bytes\n", file2, len2);
+	rewind(ptr2);
 
 	char str1[MAX];
 	char str2[MAX];
@@ -163,15 +171,14 @@ void openfiles(char file1, char file2) {
     rewind(ptr2);
     
     int cmt = 0;
+    int cnt = 0;
 
 	if (count1 > count2) {
-		printf("%d\n", count1);
-		printf("Hello");
-		printf("%d\n", count2);
+		// printf("%d\n", count1);
+		// printf("%d\n", count2);
 		char line[500]; /* or other suitable maximum line size */
         while (fgets(line, sizeof line, ptr1) != NULL) /* read a line */{
-            if (cmt > count23
-            	)
+            if (cmt >= count2)
             {   
                 //use line or in a function return it
                 //            //in case of a return first close the file with "fclose(file);"
@@ -183,12 +190,13 @@ void openfiles(char file1, char file2) {
             }   
         } 
 	} else if (count2 > count1) {
-		printf("%d\n", count1);
-		printf("%d\n", count2);
+		// printf("%d\n", count1);
+		// printf("%d\n", count2);
 		char line[500]; /* or other suitable maximum line size */
         while (fgets(line, sizeof line, ptr2) != NULL) /* read a line */{
-            if (cmt > count1)
-            {   printf("%d\n", cmt);
+            if (cmt >= count1)
+            {   
+            	// printf("%d\n", cmt);
                 //use line or in a function return it
                 //            //in case of a return first close the file with "fclose(file);"
             printf("\n %s ", line);
@@ -199,8 +207,9 @@ void openfiles(char file1, char file2) {
             }   
         }
 	}
-	else printf("%s\n");
+	else printf("%s\n", "True");
 	
 	fclose(ptr1);
-	fclose(ptr2); 
+	fclose(ptr2);
+	
 } 
