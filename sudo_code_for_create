@@ -1,0 +1,70 @@
+
+Function create_new_file (File_name)
+    Creating a Repoistry of given name
+
+      if Repoistry exits
+         print Error
+
+      else
+         create the Repoistry
+         created a temp folder inside of the  main Repoistry
+         open and inistilized the count.txt file to 0
+
+Function diff (file_name)
+
+    Take the given file name
+    check for the file in the previous version
+    call the function openfiles(file,previous_version_file)
+
+function logs()
+
+    list all the file in the Repoistry
+
+    while: last file in the Repoistry
+
+        if filename == temp
+           continue with next iteration
+
+	      print filename
+        print the modified time by ctime
+
+Function commit()
+
+    list all the files in Current Repoistry
+    Get the current verison form count.txt
+
+    while: last file in Repoistry
+
+              if filename == temp
+                   continue with next iteration
+              copy the file to temp/version
+
+    printf COMMIT SAVED;
+
+
+ main (int argc,char* argv[])
+
+    if command line argc size == 3
+
+        if argv[1] == ".init"
+          call create_new_file(argv);
+
+        else if argv[1] == diff
+          call diff(argv);
+
+        else
+          print Error
+
+    else if argc size == 2
+
+        if argv[1] == "commit"
+          call commit()
+
+        else ifargv[1] == "log"
+            call  logs()
+
+        else
+           print Error
+
+    else
+          print Error
