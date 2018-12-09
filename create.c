@@ -188,6 +188,7 @@ int main(int argc,char* argv[])
         for(counter=0;counter<argc;counter++)
             printf("\nargv[%d]: %s",counter,argv[counter]);
     }
+    A directory is a location in a file system, like /bin. A repository is typically a bunch of version controlled files.
     */
     return 0;
 }
