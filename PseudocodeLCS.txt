@@ -1,0 +1,49 @@
+void lcs(char *X, char *Y, int ctr) {
+
+   Declare m with the length of X 
+   Declare n with the length of Y
+   Declare 2 D array with size of m+1, n+1
+
+   for each value of i starting from 0 to m { 
+      for each value of j starting rom 0 to n { 
+         if either i or j is 0 
+            initialize L with zero 
+         else if character at i-1 of X is equal to character at j-1 of Y 
+            initialize L at i, j with L[i-1][j-1] + 1; 
+         else initialize L[i][j] with the maximum of L[i-1][j] and L[i][j-1] 
+      } 
+   }
+
+   intialize 2-D array, ix with L[m][n]
+  
+   Declare lcs[ix+1]; 
+   Declare addition[m];
+   Declare deletion[n];
+   lcs[ix] = '\0';
+
+   Initializing variable sized character array named addition with 0
+   
+   Initializing variable sized character array named deletion with 0
+  
+   intialize i and j with m and n respcetively 
+   while i and j both are greater than 0 { 
+      if value of X at 'i-1' is equal to value of Y at 'j-1' {
+         Set lcs at 'ix-1' as value of X at 'i-1'
+         i-- 
+         j-- 
+         ix--   
+      } 
+      else if value of L at [i-1][j] is greater than the value of L at [i][j-1]) {
+         Set value of addition at [i-1] equal to X[i-1]
+         Decrease the value of i in next step 
+      }
+      else {
+         Set value of deletion at [j-1] equal to Y[j-1]
+         Decrease the value of j in next step 
+      }
+   }
+}
+
+int maximum(int x, int y) {
+   return the maximum of 2 values!
+}
