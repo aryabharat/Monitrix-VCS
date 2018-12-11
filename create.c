@@ -9,6 +9,45 @@
 #include <time.h>       // Header for log ctime
 #include "Difference.h"
 
+//retrieve an old version
+void reload()
+{
+	printf("Choose a verison to retrieve\n");
+	FILE *fr;
+	int filecount;
+	fr = fopen("temp/.count.txt", "r");
+	fscanf(fr,"%d",&filecount); /*read from file*/
+	fclose(fr);
+  for(int i = 0; i < filecount; i++)
+  {
+    printf("version%d\n",i+1);
+  }
+	printf("version\n");
+  /*int ver_no;
+	printf("tempstr%d\n");
+	scanf(">%d\n",&ver_no);
+
+	if(ver_no > filecount)
+	{
+		printf("version does not exit");
+	}
+	else
+	{
+		char temp;
+		scanf("Do you want to reload this version [Y/N]%c\n >",&temp);
+		if(temp == 'Y' || temp == 'y')
+		{
+				 printf("\nversion loaded");
+		}
+	  else
+		{
+			printf("\nreloading terminated");
+		}
+	}
+*/
+}
+
+
 // Create a new file if already exist give error message.
 void create_new_file(char* name[])
 {
@@ -160,23 +199,26 @@ int main(int argc,char* argv[])
     else if(argc == 2)
      {
        if(!strcmp(argv[1], "commit"))
-         {
+        {
              commit();
-         }
+        }
        else if(!strcmp(argv[1], "log"))
-	{
+	      {
             logs();
-	}
-         else
-         {
+	      }
+        else if(!strcmp(argv[1], "reload"))
+        {
+          reload();
+        }
+       else
+        {
            printf("\nError %s\n",argv[1]);
-         }
+        }
      }
      else
       {
           printf("\nError %s\n",argv[1]);
       }
-
    /*
    code to make a new directory in the name direcorty.
    */
