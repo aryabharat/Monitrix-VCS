@@ -2,23 +2,23 @@
 #include <string.h>
 #include <unistd.h>      // Header file for Commit command
 #include <limits.h>     // Header File for commit command "PATH_MAX"#include <dirent.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>        // Header for dirent
 #include <sys/types.h>   //Header for log file
 #include <time.h>       // Header for log ctime
 //retrieve an old version
-void reload_util(char v_no[10])
+void reload_util(int v_no)
 {
-	struct dirent *de;  // Pointer for directory entry
-
-	 // opendir() returns a pointer of DIR type.
-	 char v_name[30]= "temp/version";
-
-	   strcat(v_name[30], v_no);
-		 printf("%s\n", v_name);
-	 DIR *dr = opendir("");
+	struct dirent *de;                          // Pointer for directory entry
+	 char buffer[20] = "temp/version";
+	 char strtemp[20];
+	 sprintf(strtemp, "%d", v_no);
+	 strcat(buffer,strtemp);
+	 printf("%s\n",buffer );
+	 DIR *dr = opendir(buffer);                 // opendir() returns a pointer of DIR type.
 
 	 if (dr == NULL)  // opendir returns NULL if couldn't open directory
 	 {
@@ -28,7 +28,20 @@ void reload_util(char v_no[10])
 	 // Refer http://pubs.opengroup.org/onlinepubs/7990989775/xsh/readdir.html
 	 // for readdir()
 	 while ((de = readdir(dr)) != NULL)
-					 printf("%s\n", de->d_name);
+					 {
+						 if(!strcmp(de->d_name,"temp") || !strcmp(de->d_name,".") || !strcmp(de->d_name,".."))
+		              continue;
+						char tempstr[30] = "";
+						strcat(tempstr,buffer);
+						strcat(tempstr,"/");
+						strcat(tempstr,de->d_name);
+	 					char sy[50] = "cp -r ";
+	 					strcat(sy,tempstr);
+						strcat(sy," ");
+						strcat(sy,de->d_name);
+						printf("%s\n", sy);
+	 					system(sy);
+					 }
 
 	 closedir(dr);
 }
@@ -53,7 +66,25 @@ void reload()
 		 scanf(" %c", &temp);
 		 if(temp == 'y' || temp == 'Y')
 		 {
-			 reload_util(v_no);
+			 char cwd[PATH_MAX];
+	     getcwd(cwd, sizeof(cwd));
+	     struct dirent *de;  // Pointer for directory entry
+	     DIR *dr = opendir(cwd);// opendir() returns a pointer of DIR type.
+	     if (dr == NULL)  // opendir returns NULL if couldn't open directory
+	     {
+	         printf("\nCould not open current directory\n" );
+	         return;
+	     }
+	     while ((de = readdir(dr)) != NULL)   //Till theres a file in the repository
+	       {
+	         if(!strcmp(de->d_name,"temp") || !strcmp(de->d_name,".") || !strcmp(de->d_name,"..") )
+	              continue;
+					char sy[30] = "rm -r ";
+					strcat(sy,de->d_name);
+					system(sy);
+	       }
+
+				reload_util(v_no);
 			 printf("\nVersion Reloaded");
 		 }
 		 else
