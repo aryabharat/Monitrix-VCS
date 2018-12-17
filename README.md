@@ -14,16 +14,21 @@ Linux based operating system
 ```
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-```
+A step by step series of examples that tell you how to get a development env running.
 Clone or download the Monitrix to local repository.
-```
-
-Run the project via terminal
 
 ```
-cd Monitrix/
+git clone https://github.com/aryabharat/Monitrix-VCS.git
+```
+
+Move into Monitrix-VCS directory via terminal.
+
+```
+cd Monitrix-VCS/
+```
+Run the script via terminal to install monitrix.
+```
+./install.sh
 ```
 
 Creating a new project
