@@ -26,6 +26,10 @@ Move into Monitrix-VCS directory via terminal.
 ```
 cd Monitrix-VCS/
 ```
+Give permissions to the file: install.sh
+```
+chmod +x install.sh
+```
 Run the script via terminal to install monitrix.
 ```
 ./install.sh
@@ -34,7 +38,7 @@ Run the script via terminal to install monitrix.
 Creating a new project
 
 ```
-init Monitrix filename;
+monitrix .init filename;
 ```
 
 ## Built With
