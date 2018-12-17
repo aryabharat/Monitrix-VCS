@@ -6,10 +6,26 @@
 
 int maximum(int x, int y);
 
-void lcs(char *X, char *Y, int ctr) {
+void lcs(char *P, char *Q, int ctr) {
 
-	int m = strlen(X);
-	int n = strlen(Y);
+	int m = strlen(P);
+	int n = strlen(Q);
+
+	char X[m+1];
+	X[0]=':';
+
+	char Y[n+1];
+	Y[0]=':';
+
+	for (int i = 1; i < m+1; i++) {
+		X[i]= P[i-1];
+	}
+
+	for (int i = 1; i < n+1; i++) {
+		Y[i]= Q[i-1];
+	}
+
+
 	int L[m+1][n+1];
 
 	for (int i=0; i<=m; i++) {
@@ -33,10 +49,14 @@ void lcs(char *X, char *Y, int ctr) {
 		addition[i] = '0';
 	}
 
+	//addition[0]=X[0];
+
 	//Initializing variable sized character array named deletion
 	for (int i = 0; i < n; ++i) {
 		deletion[i] = '0';
 	}
+
+	//deletion[0]=Y[0];
 
 	int i = m, j = n;
 	while (i > 0 && j > 0) {
@@ -73,11 +93,11 @@ void lcs(char *X, char *Y, int ctr) {
 	 	//printf("At line %d :", ctr);
 	 	if (addition[i] != '0') {
 	 		if (r == 0) {
-	 			printf("At line %d :", ctr);
+	 			printf("At line %d ::", ctr);
 	 			//printf("%s", lcs);
 	 			r++;
 	 		}
-	 		printf("\033[1;32m%c\033[0m",addition[i]);
+	 		printf("\033[1;31m%c\033[0m",addition[i]);
 	 	}
 	}
 
@@ -88,10 +108,10 @@ void lcs(char *X, char *Y, int ctr) {
 		//printf("\nAt line %d :", ctr);
 		if (deletion[i] != '0') {
 			if (p == 0) {
-			printf("\nAt line %d :", ctr);
+			printf("\nAt line %d ::", ctr);
 			p++;
 		}
-			printf("\033[1;31m%c\033[0m",deletion[i]);
+			printf("\033[1;32m%c\033[0m",deletion[i]);
 		}
 	}
 
@@ -101,13 +121,13 @@ void lcs(char *X, char *Y, int ctr) {
 	// }
 
 	if(strlen(lcs) == 0){
-		printf("At line %d :", ctr);
-		printf("\033[1;32m%s\033[0m", Y);
+		printf("At line %d ::", ctr);
+		printf("\033[1;31m%s\033[0m", Y);
 	}
 
 	if(strlen(lcs) == 0){
-		printf("At line %d :", ctr);
-		printf("\033[1;31m%s\033[0m", X);
+		printf("At line %d ::", ctr);
+		printf("\033[1;32m%s\033[0m", X);
 	}
 
    //Printing the lcs
@@ -204,7 +224,7 @@ void openfiles(char *file1, char *file2) {
             	printf("\nAt line %d:", cmt);
                 //use line or in a function return it
                 //            //in case of a return first close the file with "fclose(file);"
-            printf("\033[1;32m%s\033[0m",line);
+            printf("\033[1;31m%s\033[0m",line);
             }
             else
             {
@@ -222,7 +242,7 @@ void openfiles(char *file1, char *file2) {
             	printf("\nAt line %d:", cmt);
                 //use line or in a function return it
                 //            //in case of a return first close the file with "fclose(file);"
-            printf("\033[1;31m%s\033[0m",line);
+            printf("\033[1;32m%s\033[0m",line);
             }
             else
             {
